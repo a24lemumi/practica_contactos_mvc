@@ -59,12 +59,15 @@ Establecer la arquitectura física del proyecto y configurar el entorno de ejecu
 ### 🤔 Incluye en la documentación. 
 
 * **Seguridad:** ¿Por qué configuramos el `DocumentRoot` en `/public` y no en la raíz del proyecto donde están las carpetas `app` o `config`?
+
 Porque así evitamos que un atacante pueda acceder a archivos sensibles como los de configuración o los controladores, que no deberían ser accesibles desde el navegador.
 
 * **Git:** ¿Por qué es una mala práctica subir la carpeta `vendor/` o el archivo `.env` al repositorio de GitHub?
+
 Porque `vendor/` contiene las dependencias de terceros que pueden ser instaladas fácilmente con Composer, y subirlo al repositorio puede generar conflictos y aumentar innecesariamente el tamaño del repositorio. El archivo `.env` contiene información sensible como credenciales de base de datos, y subirlo podría comprometer la seguridad de la aplicación.
 
 * **Organización:** ¿Qué diferencia esperas encontrar entre los archivos guardados en `app/Controllers` y los guardados en `views/`?
+
 Los archivos en `app/Controllers` contienen la lógica de control de la aplicación, gestionando las peticiones y coordinando la interacción entre el modelo y la vista. En cambio, los archivos en `views/` contienen las vistas que se renderizan para mostrar la interfaz de usuario, sin incluir lógica de negocio.
 
 ### 🚩 Hito 1: Dependencias y variables de entorno.
@@ -91,9 +94,22 @@ Configurar el gestor de dependencias **Composer**, estableciendo el sistema de a
 ### 🤔 Incluye en la documentación.
 
 * **Seguridad:** Hemos creado un `.env` y un `.env.example`. ¿Por qué es necesario que el `.env.example` **sí** esté en Git y el `.env` **no**?
+
+Porque el `.env` contiene información sensible como las credenciales de la base de datos, y subirlo a GitHub podría comprometer la seguridad de la aplicación. En cambio, el `.env.example` sirve como plantilla para que otros desarrolladores sepan qué variables necesitan definir sin exponer información confidencial.
+
 * **Verificación:** Si al ejecutar `git status` ves el archivo `.env` en la lista de archivos para agregar, ¿qué significa y qué desastre podrías causar si haces `git push`?
+
+Significa que el archivo `.env` no está siendo ignorado por Git, lo que podría causar un desastre si haces `git push` porque estarías subiendo tus credenciales de base de datos y otra información sensible a un repositorio público, exponiéndolo a posibles ataques.
+
 * **Autoloading:** Gracias al PSR-4, ¿qué ventaja tenemos ahora a la hora de crear nuevas clases en `app/Controllers` respecto al uso tradicional de `require_once`?
+
+Con PSR-4, el autoloading se encarga de cargar automáticamente las clases cuando se necesitan, sin tener que escribir manualmente `require_once` para cada clase. Esto hace que el código sea más limpio y fácil de mantener, ya que no tienes que preocuparte por la gestión de las dependencias entre archivos.
+
 * **Dependencias:** ¿Para qué sirve el archivo `composer.lock` que se ha generado automáticamente? ¿Debería estar incluido en nuestro `.gitignore`?
+
+El archivo `composer.lock` registra las versiones exactas de las dependencias que se han instalado. Esto asegura que todos los desarrolladores que trabajen en el proyecto tengan las mismas versiones de las librerías, evitando problemas de compatibilidad. 
+
+No debería estar incluido en `.gitignore` porque es importante para mantener la consistencia del entorno de desarrollo entre diferentes colaboradores.
 
 ### 🚩 Hito 2: El arranque. Bootstrap y configuración.
 

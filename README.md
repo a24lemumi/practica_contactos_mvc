@@ -196,9 +196,16 @@ Implementar la lógica interna que permite reconocer una URL y ejecutar el códi
 
 * **Responsabilidades:** ¿Por qué dividimos el trabajo en dos clases? ¿Qué pasaría si el `Router` también se encargara de instanciar los controladores?
 
+Porque el `Router` se encarga exclusivamente de definir y encontrar las rutas, mientras que el `Dispatcher` se encarga de ejecutar la lógica asociada a cada ruta. 
+Si el `Router` también se encargara de instanciar los controladores, estaría asumiendo responsabilidades adicionales, lo que haría que el código fuera más difícil de mantener y escalar.
+
 * **Dinamicidad:** El `Dispatcher` usa variables para crear objetos (`new $controller()`). ¿Qué ventaja tiene esto frente a usar un `switch` gigante con todos los controladores del proyecto?
+
+Porque permite una mayor flexibilidad y escalabilidad. Con esta aproximación, el `Dispatcher` puede manejar cualquier controlador que se le asigne sin necesidad de modificar su código cada vez que se añada un nuevo controlador. En cambio, un `switch` gigante requeriría ser actualizado manualmente cada vez que se agregue un nuevo controlador, lo que aumenta la probabilidad de errores y hace que el mantenimiento sea más complicado.
+
 * **Limpieza de URL:** Si el usuario entra en `/contactos/crear?origen=web`, ¿por qué es vital que el Router ignore la parte de `?origen=web` para encontrar la ruta?
 
+Porque la parte `?origen=web` es una cadena de consulta que no forma parte de la ruta en sí. Si el Router no ignorara esta parte, no podría encontrar la ruta `/contactos/crear` correctamente, lo que resultaría en un error 404. Ignorar la cadena de consulta permite que el Router se enfoque únicamente en la ruta base para encontrar la coincidencia correcta.
 
 ### 🚩 Hito 5: Controladores renderizado de vistas.
 

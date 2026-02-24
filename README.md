@@ -133,9 +133,20 @@ Configurar la lógica de arranque y la configuración de los datos necesarios pa
 ### 🤔 Incluye en la documentación.**
 
 - **Separación de responsabilidades:** ¿Por qué crees que es mejor que las rutas como `VIEWS_DIR` estén en un archivo `config.php` en lugar de estar mezcladas con la lógica de inicialización del `bootstrap.php`?
+
+Porque el `config.php` se encarga exclusivamente de definir las constantes y configuraciones necesarias para la aplicación, mientras que el `bootstrap.php` se enfoca en la lógica de arranque y carga de dependencias.
+
 - **Entorno de errores:** ¿Qué peligro tendría dejar la librería **Whoops** activada cuando el `APP_ENV` sea igual a `production`?
+
+Dejar Whoops activada en producción podría exponer información sensible sobre la estructura del código, las rutas de los archivos y otros detalles técnicos que podrían ser aprovechados por atacantes para encontrar vulnerabilidades en la aplicación.
+
 - **Automatización:** El bootstrap crea carpetas automáticamente. ¿Cómo ayuda esto a otro desarrollador que descargue tu proyecto por primera vez desde GitHub?
+
+Esto ayuda a otro desarrollador porque no tendrá que preocuparse por crear manualmente las carpetas necesarias para el funcionamiento de la aplicación. Al ejecutar el bootstrap, se asegura de que la estructura de directorios esté completa y lista para usar, lo que facilita la configuración inicial del entorno de desarrollo.
+
 - **Variables Críticas:** En el bloque `try-catch` del `Dotenv`, se usa el método `required()`. ¿Qué ocurre si borras la variable `DBNAME` de tu archivo `.env` e intentas arrancar la app?
+
+Al borrar la variable `DBNAME` del archivo `.env` e intentar arrancar la aplicación, el método `required()` lanzará una excepción indicando que la variable de entorno requerida no está definida. Esto detendrá el arranque de la aplicación y mostrará un mensaje de error, lo que es crucial para evitar que la aplicación funcione con configuraciones incompletas o incorrectas.
 
 ### 🚩 Hito 3: El Front Controller y el enrutamiento.
 

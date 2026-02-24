@@ -195,6 +195,7 @@ Implementar la lógica interna que permite reconocer una URL y ejecutar el códi
 ### 🤔 Incluir en la documentación.**
 
 * **Responsabilidades:** ¿Por qué dividimos el trabajo en dos clases? ¿Qué pasaría si el `Router` también se encargara de instanciar los controladores?
+
 * **Dinamicidad:** El `Dispatcher` usa variables para crear objetos (`new $controller()`). ¿Qué ventaja tiene esto frente a usar un `switch` gigante con todos los controladores del proyecto?
 * **Limpieza de URL:** Si el usuario entra en `/contactos/crear?origen=web`, ¿por qué es vital que el Router ignore la parte de `?origen=web` para encontrar la ruta?
 

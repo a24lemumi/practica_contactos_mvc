@@ -38,9 +38,9 @@
                     'ultimos' => $contactosRecientes
                 ]);
         
-            } catch (DataBaseException $e) {
+            } catch (DatabaseException $e) {
             
-                $this->mostrarErrorDB($e->getMessage());
+                $this->mostrarError($e->getMessage());
 
             } catch (\Exception $e) {
 

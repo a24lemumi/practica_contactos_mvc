@@ -279,9 +279,22 @@ Implementar el acceso a datos mediante el patrón de **Modelos** y centralizar l
 ### 🤔 Incluir en la documentación.**
 
 * **Seguridad (PDO):** ¿Por qué debemos usar `$stmt->prepare()` y pasar los parámetros en un array en lugar de concatenar las variables directamente en el string de la consulta?
+
+Porque usar `$stmt->prepare()` con parámetros evita la posibilidad de ataques de inyección SQL, ya que los valores se tratan como datos y no como parte de la consulta. Concatenar variables directamente en el string de la consulta puede permitir que un atacante inserte código malicioso que se ejecute en la base de datos.
+
 * **Excepciones:** En `ContactoModel`, cuando ocurre un error, llamamos a `$error->logError()`. ¿Dónde podemos consulta ese log para saber qué ha fallado exactamente?
+
+Si el sistema de logging está configurado correctamente, los errores deberían estar registrados en un archivo de log dentro del directorio `logs/` del proyecto. Puedes revisar ese archivo para obtener detalles sobre el error que ocurrió.
+
 * **Mapeo:** ¿Qué ventaja tiene que el `ContactoService` limpie y formatee los datos antes de enviarlos al controlador?
+
+Porque el `ContactoService` actúa como una capa intermedia que se encarga de la lógica de negocio, incluyendo la validación y sanitización de datos. Esto permite que el controlador reciba datos ya procesados y listos para ser utilizados en la vista, lo que mejora la separación de responsabilidades y hace que el código sea más limpio y fácil de mantener.
+
 * **Patrón Singleton:** ¿Qué pasaría con los recursos del servidor si cada vez que un modelo necesita una consulta creara una nueva conexión `new PDO()`?
+
+Si cada vez que un modelo necesitara una consulta creara una nueva conexión `new PDO()`, se podrían generar múltiples conexiones a la base de datos, lo que podría agotar los recursos del servidor y causar problemas de rendimiento. 
+
+El patrón Singleton asegura que solo exista una conexión activa, lo que optimiza el uso de recursos y mejora la eficiencia de la aplicación.
 
 ### 🚩 Hito 7: Validación y sanitización de formularios.
 

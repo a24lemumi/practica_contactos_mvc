@@ -11,7 +11,7 @@
 
     use App\Services\ContactoService;
     use App\Forms\ContactoForm;
-    use App\Exceptions\DataBaseException;
+    use App\Exceptions\DatabaseException;
 
     class ContactoController extends BaseController 
     {
@@ -40,8 +40,8 @@
                     'contactos' => $contactos,
                     'filtros'   => $filtros,
                 ]);
-            } catch (\App\Exceptions\DataBaseException $e) {
-                $this->mostrarErrorDB($e->getMessage());
+            } catch (\App\Exceptions\DatabaseException $e) {
+                $this->mostrarError($e->getMessage());
             }
         }
 
@@ -60,8 +60,8 @@
                     'titulo'   => "Ficha de Contacto",
                     'contacto' => $detalle['contacto']
                 ]);
-            } catch (\App\Exceptions\DataBaseException $e) {
-                $this->mostrarErrorDB($e->getMessage());
+            } catch (\App\Exceptions\DatabaseException $e) {
+                $this->mostrarError($e->getMessage());
             }
         }
 
@@ -100,7 +100,7 @@
             try {
                 $this->contactoService->crearContacto($validacion['data']);
                 $this->redirect('/contactos?success=created');
-            } catch (\App\Exceptions\DataBaseException $e) {
+            } catch (\App\Exceptions\DatabaseException $e) {
                 $this->renderHTML(VIEWS_DIR . '/contactos/agregar_view.php', [
                     'titulo'        => 'Error de persistencia',
                     'form'          => $this->contactoForm->sanitizeForOutput($validacion['form']),
@@ -130,8 +130,8 @@
                     'contacto' => $detalle['contacto']
                 ]);
 
-            } catch (\App\Exceptions\DataBaseException $e) {
-                $this->mostrarErrorDB($e->getMessage());
+            } catch (\App\Exceptions\DatabaseException $e) {
+                $this->mostrarError($e->getMessage());
             }
         }
 
@@ -167,7 +167,7 @@
                 $this->contactoService->actualizarContacto($id, $validacion['data']);
                 $this->redirect('/contactos?success=updated');
 
-            } catch (\App\Exceptions\DataBaseException $e) {
+            } catch (\App\Exceptions\DatabaseException $e) {
                 $this->renderHTML(VIEWS_DIR . '/contactos/editar_view.php', [
                     'titulo'        => 'Error de persistencia',
                     'form'          => $this->contactoForm->sanitizeForOutput($_POST),
@@ -198,7 +198,7 @@
                 $this->contactoService->eliminarContacto($id);
                 $this->redirect('/contactos?success=deleted');
 
-            } catch (\App\Exceptions\DataBaseException $e) {
+            } catch (\App\Exceptions\DatabaseException $e) {
                 $this->redirect('/contactos?error=delete_failed');
             } catch (\Exception $e) {
                 $this->mostrarError("Ocurrió un error crítico: " . $e->getMessage(), 500);

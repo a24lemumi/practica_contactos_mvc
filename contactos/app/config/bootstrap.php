@@ -14,7 +14,6 @@
     define('VIEWS_DIR',  APP_ROOT . '/views');
 
     require_once APP_DIR . '/config/config.php';
-    require_once APP_DIR . '/config/parametros.php';
     require_once VENDOR_DIR . '/autoload.php';
 
     // Carga de funciones auxiliares

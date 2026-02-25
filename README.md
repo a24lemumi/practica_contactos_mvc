@@ -231,8 +231,19 @@ Implementar la lógica de control de la aplicación, gestionando las peticiones 
 ### 🤔 Incluir en la documentación.
 
 * **Herencia:** ¿Por qué es útil que todos los controladores hereden de `BaseController`? ¿Qué código nos estamos ahorrando repetir en `IndexController` y `ContactoController`?
+
+Porque `BaseController` contiene métodos y funcionalidades comunes que pueden ser utilizados por todos los controladores, como el método `renderHTML`. Esto evita la duplicación de código y facilita el mantenimiento, ya que cualquier cambio en la lógica de renderizado solo necesita ser realizado en un lugar.
+
 * **Buffers de salida:** ¿Para qué sirve `ob_start()`? ¿Qué pasaría si hiciéramos un `include` de la vista directamente sin usar el buffer?
+
+`ob_start()` inicia un buffer de salida, lo que significa que cualquier salida generada por el código incluido se almacenará en el buffer en lugar de enviarse directamente al navegador. 
+
+Si hiciéramos un `include` de la vista directamente sin usar el buffer, la salida se enviaría inmediatamente al navegador, lo que podría causar problemas si necesitamos realizar alguna lógica adicional antes de mostrar la página.
+
 * **Seguridad en POST:** ¿Por qué en métodos como `storeAction` o `updateAction` comprobamos obligatoriamente que el método de la petición sea `POST`?
+
+Porque estas acciones están destinadas a modificar datos en el servidor, y es una buena práctica de seguridad asegurarse de que solo se puedan ejecutar mediante solicitudes POST.
+
 * **Limpieza de datos:** El controlador usa un método llamado `sanitizeForOutput`. ¿Por qué no debemos mostrar directamente en el HTML lo que el usuario escribió en un formulario?
 
 ### 🚩 Hito 6: Modelo de datos y servicios.

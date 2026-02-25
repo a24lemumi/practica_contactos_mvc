@@ -1,10 +1,10 @@
 <?php
     /**
-     * Archivo: bootstrap.php
      * Descripción: Este archivo es el punto de entrada de la aplicación. 
      * Se encarga de configurar el entorno, cargar dependencias y preparar todo lo necesario para que la aplicación funcione correctamente.
-     * Autor: Miguel Ángel Leiva
-     * Fecha: 24-02-2026
+     * 
+     * @author Miguel Ángel Leiva
+     * @date 24-02-2026
     */
 
     define('APP_ROOT',   realpath(__DIR__ . '/../../'));
@@ -14,6 +14,7 @@
     define('VIEWS_DIR',  APP_ROOT . '/views');
 
     require_once APP_DIR . '/config/config.php';
+    require_once APP_DIR . '/config/parametros.php';
     require_once VENDOR_DIR . '/autoload.php';
 
     // Carga de funciones auxiliares

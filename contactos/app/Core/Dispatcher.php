@@ -1,9 +1,10 @@
 <?php
     /**
-     * Archivo de entrada principal para la aplicación de Contactos.
+     * Descripcion: Archivo de entrada principal para la aplicación de Contactos.
      * Se encarga de cargar el entorno, configurar rutas y despachar las solicitudes.
-     * Autor: Miguel Ángel Leiva
-     * Fecha: 24-02-2026
+     * 
+     * @author Miguel Ángel Leiva
+     * @date 24-02-2026
     */
 
     namespace App\Core;

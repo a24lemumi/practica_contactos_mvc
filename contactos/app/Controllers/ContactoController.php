@@ -40,7 +40,7 @@
                     'contactos' => $contactos,
                     'filtros'   => $filtros,
                 ]);
-            } catch (\App\Exceptions\DatabaseException $e) {
+            } catch (DatabaseException $e) {
                 $this->mostrarError($e->getMessage());
             }
         }
@@ -60,7 +60,7 @@
                     'titulo'   => "Ficha de Contacto",
                     'contacto' => $detalle['contacto']
                 ]);
-            } catch (\App\Exceptions\DatabaseException $e) {
+            } catch (DatabaseException $e) {
                 $this->mostrarError($e->getMessage());
             }
         }
@@ -73,7 +73,9 @@
     
             $this->renderHTML(VIEWS_DIR . '/contactos/agregar_view.php', [
                 'titulo' => 'Agregar nuevo contacto',
-                'form'   => $form
+                'form'   => $form,
+                'errors' => [],
+                'generalError' => null
             ]);
         }
 
@@ -92,7 +94,8 @@
                 $this->renderHTML(VIEWS_DIR . '/contactos/agregar_view.php', [
                     'titulo' => 'Corregir datos del contacto',
                     'form'   => $this->contactoForm->sanitizeForOutput($validacion['form']),
-                    'errors' => $this->contactoForm->sanitizeForOutput($validacion['errors'])
+                    'errors' => $this->contactoForm->sanitizeForOutput($validacion['errors']),
+                    'generalError' => null
                 ]);
                 return;
             }
@@ -100,11 +103,12 @@
             try {
                 $this->contactoService->crearContacto($validacion['data']);
                 $this->redirect('/contactos?success=created');
-            } catch (\App\Exceptions\DatabaseException $e) {
+            } catch (DatabaseException $e) {
                 $this->renderHTML(VIEWS_DIR . '/contactos/agregar_view.php', [
                     'titulo'        => 'Error de persistencia',
                     'form'          => $this->contactoForm->sanitizeForOutput($validacion['form']),
-                    'general_error' => 'No se pudo guardar el contacto. Intente de nuevo más tarde.'
+                    'errors'        => [],
+                    'generalError' => 'No se pudo guardar el contacto. Intente de nuevo más tarde.'
                 ]);
             } catch (\Exception $e) {
                 $this->mostrarError("Ocurrió un error crítico: " . $e->getMessage(), 500);
@@ -127,10 +131,13 @@
                 $this->renderHTML(VIEWS_DIR . '/contactos/editar_view.php', [
                     'titulo'   => 'Editar contacto',
                     'form'     => $form,
-                    'contacto' => $detalle['contacto']
+                    'contacto' => $detalle['contacto'],
+                    'id'       => $id,
+                    'errors'   => [],
+                    'generalError' => null
                 ]);
 
-            } catch (\App\Exceptions\DatabaseException $e) {
+            } catch (DatabaseException $e) {
                 $this->mostrarError($e->getMessage());
             }
         }
@@ -159,7 +166,8 @@
                         'titulo'   => 'Corregir datos del contacto',
                         'form'     => $this->contactoForm->sanitizeForOutput($validacion['form']),
                         'errors'   => $this->contactoForm->sanitizeForOutput($validacion['errors']),
-                        'contacto' => $contacto['contacto']
+                        'contacto' => $contacto['contacto'],
+                        'id'       => $id
                     ]);
                     return;
                 }
@@ -167,12 +175,14 @@
                 $this->contactoService->actualizarContacto($id, $validacion['data']);
                 $this->redirect('/contactos?success=updated');
 
-            } catch (\App\Exceptions\DatabaseException $e) {
+            } catch (DatabaseException $e) {
                 $this->renderHTML(VIEWS_DIR . '/contactos/editar_view.php', [
                     'titulo'        => 'Error de persistencia',
                     'form'          => $this->contactoForm->sanitizeForOutput($_POST),
-                    'general_error' => 'No se pudo actualizar el contacto. Intente de nuevo más tarde.',
-                    'contacto'      => ['id' => $id]
+                    'errors'        => [],
+                    'generalError'  => 'No se pudo actualizar el contacto. Intente de nuevo más tarde.',
+                    'contacto'      => ['id' => $id],
+                    'id'            => $id
                 ]);
             } catch (\Exception $e) {
                 $this->mostrarError("Ocurrió un error crítico: " . $e->getMessage(), 500);
@@ -198,7 +208,7 @@
                 $this->contactoService->eliminarContacto($id);
                 $this->redirect('/contactos?success=deleted');
 
-            } catch (\App\Exceptions\DatabaseException $e) {
+            } catch (DatabaseException $e) {
                 $this->redirect('/contactos?error=delete_failed');
             } catch (\Exception $e) {
                 $this->mostrarError("Ocurrió un error crítico: " . $e->getMessage(), 500);

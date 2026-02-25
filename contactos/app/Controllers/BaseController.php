@@ -23,12 +23,14 @@
                 $this->mostrarError("La vista solicitada no existe: " . basename($fileName), 500);
                 return;
             }
-            
 
             $helpersPath = VIEWS_DIR . '/helpers/main_helper.php';
             if (file_exists($helpersPath)) {
                 require_once $helpersPath;
             }
+
+            // Extraer variables para que estén disponibles en la vista
+            extract($data);
 
             // Inicia el almacenamiento en búfer de salida para capturar el contenido generado por la vista.
             ob_start();
@@ -37,6 +39,8 @@
             // Obtiene el contenido generado por la vista y limpia el búfer de salida.
             $content = ob_get_clean();
 
+            // Extraer variables del array $data para que estén disponibles en el layout
+            extract($data);
             $titulo_pagina = $data['titulo_pagina'] ?? $data['titulo'] ?? 'Agenda de Contactos';
 
             $layoutPath = VIEWS_DIR . '/layouts/base_view.php';

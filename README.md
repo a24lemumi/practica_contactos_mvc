@@ -317,9 +317,22 @@ Asegurar la integridad y seguridad de los datos que entran en la aplicación, im
 ### 🤔 Incluir en la documentación.
 
 * **Sanitización vs Validación:** ¿Cuál es la diferencia? ¿Por qué es necesario limpiar los datos (`Sanitizer`) antes de comprobar si son válidos (`Validator`)?
+
+La sanitización se refiere al proceso de limpiar los datos para eliminar caracteres no deseados o potencialmente peligrosos, mientras que la validación se refiere a verificar que los datos cumplen con ciertos criterios o reglas de negocio. 
+
+Es necesario limpiar los datos antes de validarlos para asegurarse de que la validación se realice sobre datos seguros y no contenga elementos que puedan causar problemas de seguridad o errores en el procesamiento.
+
 * **XSS (Cross-Site Scripting):** ¿Qué ocurriría si no usáramos `htmlspecialchars` al mostrar los datos que el usuario escribió mal en el formulario?
+
+Si no usáramos `htmlspecialchars` al mostrar los datos que el usuario escribió mal en el formulario, un atacante podría insertar código HTML o JavaScript malicioso en los campos del formulario. 
+
 * **Experiencia de Usuario:** ¿Por qué es importante devolver los datos originales al formulario cuando hay un error (repoblar el formulario) en lugar de dejar los campos vacíos?
+
+Es importante devolver los datos originales al formulario cuando hay un error para mejorar la experiencia del usuario. Si los campos se dejan vacíos, el usuario tendría que volver a ingresar toda la información, lo que puede ser frustrante y aumentar la probabilidad de que abandonen el proceso.
+
 * **Responsabilidad:** ¿Por qué crees que es mejor tener la validación en clases separadas en lugar de escribir todos los `if` directamente dentro del Controlador?
+
+Porque tener la validación en clases separadas mejora la organización del código y la separación de responsabilidades. Esto hace que el código sea más modular, fácil de mantener y reutilizable.
 
 ### 🚩 Hito 8: Sistema de vistas, layouts y componentes.
 
@@ -342,6 +355,17 @@ Implementar la interfaz de usuario de la aplicación organizando las vistas de f
 ### 🤔 Incluir en la documentación**
 
 * **DRY (Don't Repeat Yourself):** ¿Qué ventaja tiene haber separado el `nav_view.php` del resto de las páginas si mañana decidimos cambiar el color de la barra de navegación?
+
+Separar el `nav_view.php` del resto de las páginas permite que cualquier cambio en la barra de navegación se realice en un solo lugar, lo que facilita el mantenimiento y asegura la consistencia en todas las páginas que utilizan ese componente.
+
 * **Seguridad en la Vista:** En los archivos entregados se usa `htmlspecialchars()`. ¿Por qué es obligatorio usarlo al imprimir variables como el nombre o el email del contacto?
+
+Es obligatorio usar `htmlspecialchars()` al imprimir variables como el nombre o el email del contacto para evitar ataques de Cross-Site Scripting (XSS). Esta función convierte caracteres especiales en entidades HTML, lo que impide que el código malicioso se ejecute en el navegador del usuario.
+
 * **Inyección de contenido:** ¿Cómo sabe el archivo `base_view.php` qué contenido debe mostrar en la variable `$content`? (Relaciónalo con el Hito 5 y el Buffer de salida).
+
+El archivo `base_view.php` muestra el contenido que se le asigna a la variable `$content`, que es generado por el método `renderHTML` en el `BaseController`. Este método utiliza un buffer de salida para capturar el contenido de la vista específica que se está renderizando, y luego asigna ese contenido al layout base, lo que permite que el contenido dinámico se integre dentro de la estructura común del sitio.
+
 * **Interatividad:** Observa cómo se gestionan los mensajes de éxito (`success=created`). ¿Cómo ayudamos al usuario a saber que su acción ha funcionado sin que tenga que revisar la base de datos?
+
+Ayudamos al usuario a saber que su acción ha funcionado mostrando un mensaje de éxito en la interfaz después de realizar una acción como crear o actualizar un contacto. Esto se logra pasando parámetros en la URL (como `success=created`) y luego mostrando un mensaje correspondiente en la vista, lo que mejora la experiencia del usuario al proporcionar retroalimentación inmediata sobre sus acciones.

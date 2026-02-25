@@ -19,6 +19,7 @@
     // --- Definición de Rutas ---
     $router->get('/', [IndexController::class, 'indexAction']);
     $router->get('/contactos', [ContactoController::class, 'indexAction']);
+    $router->get('/contactos/search', [ContactoController::class, 'indexAction']);
     $router->get('/contactos/ver/{id}', [ContactoController::class, 'showAction']);
     $router->get('/contactos/crear', [ContactoController::class, 'createAction']);
     $router->post('/contactos/crear', [ContactoController::class, 'storeAction']);
